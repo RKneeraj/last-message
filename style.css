@@ -1,0 +1,327 @@
+/* ===========================
+   FAREWELL CARD — style.css
+   Palette:
+   --midnight : #0D1117
+   --navy     : #161B22
+   --card-bg  : #1A2033
+   --rose     : #F4A5AE
+   --gold     : #C9A96E
+   --gold-lt  : #e8c98a
+   --text     : #E6E0D4
+   --muted    : #8A8FA8
+=========================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --midnight : #0D1117;
+  --navy     : #161B22;
+  --card-bg  : #1A2033;
+  --rose     : #F4A5AE;
+  --gold     : #C9A96E;
+  --gold-lt  : #e8c98a;
+  --text     : #E6E0D4;
+  --muted    : #8A8FA8;
+  --glow     : rgba(201, 169, 110, 0.12);
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--midnight);
+  color: var(--text);
+  font-family: 'Noto Serif Devanagari', 'Lato', serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ── Stars background ── */
+.stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  animation: twinkle var(--dur, 3s) ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.1; transform: scale(0.8); }
+  to   { opacity: 0.7; transform: scale(1.2); }
+}
+
+/* ── Layout ── */
+.wrapper {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 20px 80px;
+  gap: 0;
+}
+
+/* ── Flower ── */
+.flower-wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 36px;
+}
+
+.flower {
+  width: 120px;
+  height: 120px;
+  animation: floatFlower 6s ease-in-out infinite, wilting 8s ease-in-out 2s forwards;
+  filter: drop-shadow(0 0 18px rgba(244, 165, 174, 0.4));
+}
+
+@keyframes floatFlower {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%       { transform: translateY(-8px) rotate(3deg); }
+}
+
+@keyframes wilting {
+  0%   { opacity: 1; filter: drop-shadow(0 0 18px rgba(244, 165, 174, 0.5)); }
+  60%  { opacity: 0.9; }
+  100% { opacity: 0.55; filter: drop-shadow(0 0 6px rgba(244, 165, 174, 0.15)) grayscale(0.4); }
+}
+
+/* Falling petals */
+.petal-fall {
+  position: absolute;
+  top: -10px;
+  font-size: 14px;
+  opacity: 0;
+  animation: petalDrop 6s ease-in infinite;
+  pointer-events: none;
+  filter: grayscale(0.2);
+}
+
+.p1 { left: 20%;  animation-delay: 3s;  animation-duration: 5s; }
+.p2 { left: 50%;  animation-delay: 5s;  animation-duration: 6s; }
+.p3 { left: 75%;  animation-delay: 7s;  animation-duration: 5.5s; }
+.p4 { left: 38%;  animation-delay: 9s;  animation-duration: 6.5s; }
+
+@keyframes petalDrop {
+  0%   { opacity: 0;   transform: translateY(0)    rotate(0deg);   }
+  15%  { opacity: 0.8; }
+  100% { opacity: 0;   transform: translateY(180px) rotate(180deg); }
+}
+
+/* ── Card ── */
+.card {
+  background: var(--card-bg);
+  border: 1px solid rgba(201, 169, 110, 0.25);
+  border-radius: 4px;
+  max-width: 700px;
+  width: 100%;
+  padding: 52px 56px 60px;
+  box-shadow:
+    0 0 60px rgba(201, 169, 110, 0.07),
+    0 4px 40px rgba(0,0,0,0.5),
+    inset 0 0 80px rgba(201, 169, 110, 0.03);
+  position: relative;
+}
+
+/* corner accents */
+.card::before,
+.card::after {
+  content: '';
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-color: var(--gold);
+  border-style: solid;
+  opacity: 0.45;
+}
+.card::before {
+  top: 16px; left: 16px;
+  border-width: 1px 0 0 1px;
+}
+.card::after {
+  bottom: 16px; right: 16px;
+  border-width: 0 1px 1px 0;
+}
+
+/* ── Card Header ── */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 44px;
+}
+
+.gold-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.5;
+}
+
+.title {
+  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
+  font-size: clamp(1.3rem, 3vw, 1.75rem);
+  font-weight: 600;
+  color: var(--gold-lt);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  text-shadow: 0 0 30px rgba(201, 169, 110, 0.3);
+}
+
+/* ── Letter Body ── */
+.letter-body {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.para {
+  font-family: 'Noto Serif Devanagari', serif;
+  font-size: clamp(1rem, 2.2vw, 1.08rem);
+  font-weight: 300;
+  line-height: 2;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+
+/* ── Scroll reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Divider ── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+}
+.divider-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.6;
+}
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,169,110,0.3), transparent);
+}
+
+/* ── Special blocks ── */
+.emphasis-block {
+  border-left: 2px solid var(--rose);
+  padding-left: 20px;
+  color: #ddd0c8;
+}
+
+.soft {
+  color: var(--muted);
+  font-size: 0.96em;
+}
+
+.memory-block {
+  font-style: italic;
+  color: #d4c8c0;
+  position: relative;
+  padding: 20px 24px;
+  background: rgba(244, 165, 174, 0.05);
+  border-radius: 2px;
+  border: 1px solid rgba(244, 165, 174, 0.1);
+}
+
+.memory-block::before {
+  content: '\201C';
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  color: var(--rose);
+  opacity: 0.3;
+  position: absolute;
+  top: -14px;
+  left: 12px;
+  line-height: 1;
+}
+
+.closing-lines {
+  line-height: 2.2;
+  color: #ccc4bc;
+}
+
+.and-me {
+  color: var(--muted);
+  font-style: italic;
+  font-size: 0.95em;
+}
+
+.farewell-word {
+  font-family: 'Playfair Display', 'Noto Serif Devanagari', serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--rose);
+  text-align: center;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 30px rgba(244, 165, 174, 0.35);
+  padding-top: 10px;
+}
+
+/* ── Footer ── */
+.footer {
+  margin-top: 36px;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  text-transform: lowercase;
+  opacity: 0.5;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .card {
+    padding: 36px 28px 44px;
+  }
+  .card-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .gold-line {
+    width: 100%;
+  }
+  .title {
+    text-align: center;
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .flower, .petal-fall, .star {
+    animation: none;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
